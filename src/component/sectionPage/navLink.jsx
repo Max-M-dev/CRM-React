@@ -1,15 +1,32 @@
-import "../../style/style.css";
+import { NavLink, useLocation } from "react-router-dom";
 
-export default function Sidebar(props) {
+function Li(props) {
+	let location = useLocation();
+	const { href, title, children } = props;
+	return (
+		<li className={`nav-item ${location.pathname === href ? "active" : ""}`}>
+			<NavLink to={href} className="nav-link">
+				{children}
+				<span className="menu-title">{title}</span>
+			</NavLink>
+		</li>
+	);
+}
+
+export default function NavList() {
 	return (
 		<nav className="sidebar sidebar-offcanvas" id="sidebar">
 			<ul className="nav">
-				<li className="nav-item">
-					<a className="nav-link" href="index.html">
-						<i className="mdi mdi-grid-large menu-icon"></i>
-						<span className="menu-title">Dashboard</span>
-					</a>
-				</li>
+				<Li href="/" title="Dashboard">
+					<i className="menu-icon mdi mdi-view-dashboard"></i>
+				</Li>
+				<Li href="/clients" title="Клиеты">
+					<i className="menu-icon mdi mdi-account-multiple"></i>
+				</Li>
+				<Li href="/orders" title="Заказы">
+					<i className="menu-icon mdi mdi-cart-outline"></i>
+				</Li>
+
 				<li className="nav-item nav-category">UI Elements</li>
 				<li className="nav-item">
 					<a

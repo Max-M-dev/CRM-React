@@ -1,10 +1,10 @@
-import Header from "./component/section/header";
-import Sidebar from "./component/section/sidebar";
-import Footer from "./component/section/footer";
-import "./style/style.css";
-import Index from "./page";
+import Header from "./header";
+import Sidebar from "./sidebar";
+import Footer from "./footer";
 
-function App() {
+import { Outlet } from "react-router-dom";
+
+export default function Layout() {
 	return (
 		<div className="container-scroller">
 			<Header />
@@ -12,7 +12,7 @@ function App() {
 				<Sidebar />
 				<div className="main-panel">
 					<div className="content-wrapper">
-						<Index />
+						<Outlet />
 					</div>
 					{/* <!-- content-wrapper ends --> */}
 					{/* <!-- partial:partials/_footer.html --> */}
@@ -25,5 +25,3 @@ function App() {
 		</div>
 	);
 }
-
-export default App;

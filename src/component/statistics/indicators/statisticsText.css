@@ -1,0 +1,29 @@
+.statistics-title {
+	font-style: normal;
+	font-weight: 500;
+	font-size: 13px;
+	line-height: 18px;
+	color: #8d8d8d;
+	margin-bottom: 4px;
+}
+
+@media (max-width: 991px) {
+	.statistics-title {
+		font-size: 12px;
+	}
+}
+
+.rate-percentage {
+	font-style: normal;
+	font-weight: bold;
+	font-size: 26px;
+	line-height: 36px;
+	color: #000000;
+	margin-bottom: 0;
+}
+
+@media (max-width: 991px) {
+	.rate-percentage {
+		font-size: 18px;
+	}
+}
