@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { remove, getFullList } from "../store/orders";
+import { remove } from "../store/orders";
 import listCheckedInTable from "../utils/listCheckedInTable";
 import OrderListUI from "./orderListUI.jsx";
 
@@ -23,10 +23,6 @@ export default function OrderList() {
 		dispatch(remove(listIdRemove));
 		setShowBtnAdd(true);
 	}, [refTable]);
-
-	useEffect(() => {
-		dispatch(getFullList());
-	});
 
 	useEffect(() => {
 		if (refTable?.current) {

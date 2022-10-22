@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider, useDispatch } from "react-redux";
 import { store } from "./store";
 import { getClients } from "./store/clients";
+import { getFullList } from "./store/orders";
 
 function InitialData({ children }) {
 	const isLoad = useRef(false);
@@ -14,6 +15,7 @@ function InitialData({ children }) {
 		if (isLoad.current === false) {
 			isLoad.current = true;
 			dispatch(getClients());
+			dispatch(getFullList());
 		}
 	}, []);
 	return <>{children}</>;
