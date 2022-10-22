@@ -1,6 +1,10 @@
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useMemo } from "react";
+
+import { ORDERS as orderPathName } from "../constants/router";
+import TableHistoryOrdersUi from "../component/page/clients/tableHistoryOrdersUi";
+import Status from "../component/UIKit/table/status";
 
 function ClientCardInfo({
 	avatar,
@@ -40,10 +44,30 @@ function InfoLineInClient(title, value) {
 export default function ClientProfile(props) {
 	const { id: idClientUrlParams } = useParams();
 	const { list: clients } = useSelector((state) => state.clients);
+	const orders = useSelector((state) => state.orders);
 
 	const currentClient = clients.filter((client) => {
 		return client.id === +idClientUrlParams;
 	})[0];
+	const currentCustomerOrders = orders.filter((order) => {
+		return order.idClient === +idClientUrlParams;
+	});
+	const isHaveCurrentCustemerOrders = !!currentCustomerOrders.length;
+	let propsTableHistoryOrdersUi;
+	if (isHaveCurrentCustemerOrders) {
+		const dataForTable = currentCustomerOrders.map((order) => {
+			return [
+				order.dateStart,
+				<Link to={`/${orderPathName}/${order.id}`}>{order.title}</Link>,
+				<Status key={order.id} value={order.status.value} />,
+			];
+		});
+
+		propsTableHistoryOrdersUi = {
+			header: ["Дата создания", "Название", "Статус"],
+			body: dataForTable,
+		};
+	}
 
 	return (
 		<div className="col-md-12 grid-margin">
@@ -58,81 +82,11 @@ export default function ClientProfile(props) {
 								<div className="card-body">
 									<h4 className="card-title">История заказов</h4>
 									<div className="table-responsive">
-										<table className="table table-hover">
-											<thead>
-												<tr>
-													<th>User</th>
-													<th>Product</th>
-													<th>Sale</th>
-													<th>Status</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Jacob</td>
-													<td>Photoshop</td>
-													<td className="text-danger">
-														{" "}
-														28.76% <i className="ti-arrow-down"></i>
-													</td>
-													<td>
-														<label className="badge badge-danger">
-															Pending
-														</label>
-													</td>
-												</tr>
-												<tr>
-													<td>Messsy</td>
-													<td>Flash</td>
-													<td className="text-danger">
-														{" "}
-														21.06% <i className="ti-arrow-down"></i>
-													</td>
-													<td>
-														<label className="badge badge-warning">
-															In progress
-														</label>
-													</td>
-												</tr>
-												<tr>
-													<td>John</td>
-													<td>Premier</td>
-													<td className="text-danger">
-														{" "}
-														35.00% <i className="ti-arrow-down"></i>
-													</td>
-													<td>
-														<label className="badge badge-info">Fixed</label>
-													</td>
-												</tr>
-												<tr>
-													<td>Peter</td>
-													<td>After effects</td>
-													<td className="text-success">
-														{" "}
-														82.00% <i className="ti-arrow-up"></i>
-													</td>
-													<td>
-														<label className="badge badge-success">
-															Completed
-														</label>
-													</td>
-												</tr>
-												<tr>
-													<td>Dave</td>
-													<td>53275535</td>
-													<td className="text-success">
-														{" "}
-														98.05% <i className="ti-arrow-up"></i>
-													</td>
-													<td>
-														<label className="badge badge-warning">
-															In progress
-														</label>
-													</td>
-												</tr>
-											</tbody>
-										</table>
+										{isHaveCurrentCustemerOrders ? (
+											<TableHistoryOrdersUi {...propsTableHistoryOrdersUi} />
+										) : (
+											<>Записей еще нет</>
+										)}
 									</div>
 								</div>
 							</div>
