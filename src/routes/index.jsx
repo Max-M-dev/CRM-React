@@ -1,4 +1,5 @@
 import Layout from "./../component/sectionPage/layout";
+import { CLIENTS, ORDERS, ADD } from "../constants/router";
 
 import Index from "../page/index";
 import Clients from "../page/clients";
@@ -17,15 +18,15 @@ export default function Router() {
 			<Routes>
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Index />} />
-					<Route path="orders">
+					<Route path={ORDERS}>
 						<Route index element={<OrderList />} />
-						<Route path="add" element={<OrderAdd />} />
+						<Route path={ADD} element={<OrderAdd />} />
 						{/* <Route path=":id" element={} /> */}
 					</Route>
 					<Route path="test" element={<Test />} />
-					<Route path="clients">
+					<Route path={CLIENTS}>
 						<Route index element={<Clients />} />
-						<Route path="add" element={<ClientAdd />} />
+						<Route path={ADD} element={<ClientAdd />} />
 						<Route path=":id" element={<ClientProfile />} />
 					</Route>
 					<Route path="*" element={<NotFount />} />
